@@ -4,7 +4,7 @@ import { StatCard } from "@/components/shared/StatCard";
 import { DocumentCard } from "@/components/shared/DocumentCard";
 import {
   Eye, Rocket, School, Users, FlaskConical, BookOpen,
-  MapPin, Phone, Mail, Globe, Calendar, Award, Building2,
+  MapPin, Phone, Mail, Globe, Building2,
   GraduationCap, Lightbulb, ShieldCheck, ArrowRight
 } from "lucide-react";
 import { Link } from "react-router-dom";
