@@ -2,11 +2,50 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, Calendar, GraduationCap, Library, Trophy, User, LogOut } from "lucide-react";
 import { announcementsService } from "@/services/api";
-import { HeroSection } from "@/components/shared/HeroSection";
+import { HeroSection, type SlideContent } from "@/components/shared/HeroSection";
 import { NotificationCard } from "@/components/shared/NotificationCard";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuthStore } from "@/stores/useAuthStore";
+
+const HOME_SLIDES: SlideContent[] = [
+  {
+    image: "/hero-slides/images1.jpg",
+    title: "Empowering the Next Generation of Innovators",
+    subtitle: "APJ Abdul Kalam Technological University",
+    description: "A premier technological university fostering excellence in engineering education and research across Kerala. Join us in shaping the future of technology and driving innovations that matter."
+  },
+  {
+    image: "/hero-slides/images2.jpg",
+    title: "Advancing Research & Development",
+    subtitle: "Innovation Hub",
+    description: "State-of-the-art facilities supporting cutting-edge research in emerging technologies. Our interdisciplinary approach encourages scholars to solve complex global challenges."
+  },
+  {
+    image: "/hero-slides/images3.jpg",
+    title: "Excellence in Engineering Education",
+    subtitle: "World-Class Academics",
+    description: "Providing quality technical education to over 1.5 lakh students across 150+ affiliated colleges. Our rigorous curriculum is designed to create industry-ready professionals."
+  },
+  {
+    image: "/hero-slides/images4.jpg",
+    title: "Fostering Industry Connections",
+    subtitle: "Career Opportunities",
+    description: "Strong industry-academia partnerships ensuring high employability and practical skills. We bridge the gap between classroom theory and real-world industrial applications."
+  },
+  {
+    image: "/hero-slides/images5.jpg",
+    title: "Vibrant Campus Life",
+    subtitle: "Student Experience",
+    description: "A dynamic environment promoting arts, sports, technical clubs, and holistic development. Experience a vibrant campus culture that nurtures leadership and teamwork."
+  },
+  {
+    image: "/hero-slides/university_pic.jpg",
+    title: "Leading Technological Education",
+    subtitle: "State University",
+    description: "Setting benchmarks in technical education quality and administrative efficiency since 2014. We are dedicated to creating a sustainable and technologically empowered society."
+  }
+];
 
 export default function HomePage() {
   const { isLoggedIn, username, logout } = useAuthStore();
@@ -24,16 +63,14 @@ export default function HomePage() {
     { icon: <BookOpen className="w-8 h-8"/>, title: "Academics", desc: "Syllabus, Regulations", href: "/academics" },
     { icon: <Calendar className="w-8 h-8"/>, title: "Examinations", desc: "Timetables, Results", href: "/examination" },
     { icon: <GraduationCap className="w-8 h-8"/>, title: "Admissions", desc: "UG, PG, Ph.D.", href: "/affiliation" },
-    { icon: <Library className="w-8 h-8"/>, title: "Library", desc: "E-Resources, Journals", href: "#" },
-    { icon: <Trophy className="w-8 h-8"/>, title: "Sports & Arts", desc: "Activities, Festivals", href: "#" },
+    { icon: <Library className="w-8 h-8"/>, title: "Library", desc: "E-Resources, Journals", href: "/library" },
+    { icon: <Trophy className="w-8 h-8"/>, title: "Sports & Arts", desc: "Activities, Festivals", href: "/sports" },
   ];
 
   return (
     <div>
       <HeroSection 
-        title="Empowering the Next Generation of Innovators"
-        subtitle="APJ Abdul Kalam Technological University"
-        description="A premier technological university fostering excellence in engineering education and research across Kerala."
+        slides={HOME_SLIDES}
         gradient="maroon"
       >
         <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl hidden lg:block">
@@ -90,13 +127,15 @@ export default function HomePage() {
                   title="Announcements & Updates" 
                   className="mb-0"
                 />
-                <Link to="#" className="font-label-md text-sm text-heritage-maroon dark:text-primary-fixed hover:underline flex items-center gap-1">
+                <Link to="/announcements" className="font-label-md text-sm text-heritage-maroon dark:text-primary-fixed hover:underline flex items-center gap-1">
                   View All <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
               <div className="space-y-4">
                 {announcements.map(announcement => (
-                  <NotificationCard key={announcement.id} announcement={announcement} />
+                  <Link key={announcement.id} to="/announcements" className="block">
+                    <NotificationCard announcement={announcement} />
+                  </Link>
                 ))}
               </div>
             </div>
@@ -107,29 +146,34 @@ export default function HomePage() {
                   title="Upcoming Events" 
                   className="mb-0"
                 />
+                <Link to="/events" className="font-label-md text-sm text-heritage-maroon dark:text-primary-fixed hover:underline flex items-center gap-1">
+                  View All <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
               <div className="space-y-6">
                 {events.map(event => (
-                  <Card key={event.id} className="overflow-hidden group cursor-pointer border-outline-variant/30 hover:border-kerala-gold/50 transition-all shadow-sm hover:shadow-md">
-                    <div className="h-40 overflow-hidden relative">
-                      <img 
-                        src={event.imageUrl} 
-                        alt={event.title} 
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm text-institutional-navy font-label-md text-xs px-2 py-1 rounded font-bold">
-                        {event.category}
+                  <Link key={event.id} to="/events" className="block">
+                    <Card className="overflow-hidden group cursor-pointer border-outline-variant/30 hover:border-kerala-gold/50 transition-all shadow-sm hover:shadow-md">
+                      <div className="h-40 overflow-hidden relative">
+                        <img 
+                          src={event.imageUrl} 
+                          alt={event.title} 
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm text-institutional-navy font-label-md text-xs px-2 py-1 rounded font-bold">
+                          {event.category}
+                        </div>
                       </div>
-                    </div>
-                    <CardContent className="p-4 bg-surface-container-lowest dark:bg-slate-900">
-                      <h4 className="font-headline-sm text-base font-semibold group-hover:text-heritage-maroon dark:group-hover:text-primary-fixed transition-colors mb-2 line-clamp-2">
-                        {event.title}
-                      </h4>
-                      <p className="font-label-md text-sm text-slate-gray dark:text-slate-400 flex items-center gap-2">
-                        <Calendar className="w-4 h-4" /> {event.date}
-                      </p>
-                    </CardContent>
-                  </Card>
+                      <CardContent className="p-4 bg-surface-container-lowest dark:bg-slate-900">
+                        <h4 className="font-headline-sm text-base font-semibold group-hover:text-heritage-maroon dark:group-hover:text-primary-fixed transition-colors mb-2 line-clamp-2">
+                          {event.title}
+                        </h4>
+                        <p className="font-label-md text-sm text-slate-gray dark:text-slate-400 flex items-center gap-2">
+                          <Calendar className="w-4 h-4" /> {event.date}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             </div>

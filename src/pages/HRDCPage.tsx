@@ -8,7 +8,7 @@ export default function HRDCPage() {
     <div>
       <HeroSection 
         title="HRDC Centers"
-        description="Human Resource Development Centers for training and faculty empowerment."
+        description="Human Resource Development Centers for training and faculty empowerment. We are committed to the professional growth of our educators, equipping them with modern pedagogical skills, research methodologies, and domain-specific knowledge to shape the leaders of tomorrow."
         gradient="navy"
       />
 

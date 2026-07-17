@@ -8,7 +8,7 @@ export default function IQACPage() {
     <div>
       <HeroSection 
         title="Internal Quality Assurance Cell"
-        description="Ensuring and enhancing the quality of academic and administrative performance."
+        description="Ensuring and enhancing the quality of academic and administrative performance. The Internal Quality Assurance Cell works tirelessly to develop systems for conscious, consistent, and catalytic action to improve the academic and administrative performance of the university."
         gradient="audit"
       />
 

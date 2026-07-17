@@ -11,10 +11,18 @@ const SLIDESHOW_IMAGES = [
   "/hero-slides/university_pic.jpg"
 ];
 
-interface HeroSectionProps {
+export interface SlideContent {
+  image: string;
   title: string;
   subtitle?: string;
   description?: string;
+}
+
+interface HeroSectionProps {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  slides?: SlideContent[];
   gradient?: "maroon" | "navy" | "audit";
   children?: ReactNode;
   className?: string;
@@ -24,18 +32,25 @@ export function HeroSection({
   title,
   subtitle,
   description,
+  slides,
   gradient = "maroon",
   children,
   className
 }: HeroSectionProps) {
+  const images = slides ? slides.map(s => s.image) : SLIDESHOW_IMAGES;
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % SLIDESHOW_IMAGES.length);
+      setCurrentSlide((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [images.length]);
+  
+  const currentContent = slides ? slides[currentSlide] : { title, subtitle, description };
+  const displayTitle = currentContent.title || title || "";
+  const displaySubtitle = currentContent.subtitle || subtitle || "";
+  const displayDescription = currentContent.description || description || "";
   
   const gradientStyles = {
     maroon: "bg-gradient-to-br from-[#570013]/85 to-[#800020]/85",
@@ -44,10 +59,10 @@ export function HeroSection({
   };
 
   return (
-    <section className={cn("relative bg-slate-900 text-white py-16 md:py-24 overflow-hidden", className)}>
+    <section className={cn("relative bg-slate-900 text-white py-16 md:py-24 overflow-hidden min-h-[400px] md:min-h-[500px] flex items-center", className)}>
       {/* Background Images Slideshow */}
       <div className="absolute inset-0 z-0 bg-slate-900">
-        {SLIDESHOW_IMAGES.map((src, idx) => (
+        {images.map((src, idx) => (
           <img 
             key={src}
             src={src} 
@@ -62,20 +77,20 @@ export function HeroSection({
         <div className={cn("absolute inset-0", gradientStyles[gradient], "opacity-60")}></div>
       </div>
 
-      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
+      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8">
-            {subtitle && (
-              <span className="inline-block py-1 px-3 rounded-full bg-white/20 backdrop-blur-md text-white font-label-md mb-4 text-sm tracking-wide">
-                {subtitle}
+            {displaySubtitle && (
+              <span className="inline-block py-1 px-3 rounded-full bg-white/20 backdrop-blur-md text-white font-label-md mb-4 text-sm tracking-wide transition-all duration-500">
+                {displaySubtitle}
               </span>
             )}
-            <h1 className="font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-4 leading-tight">
-              {title}
+            <h1 className="font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-4 leading-tight transition-all duration-500">
+              {displayTitle}
             </h1>
-            {description && (
-              <p className="font-body-lg text-lg text-white/90 max-w-2xl">
-                {description}
+            {displayDescription && (
+              <p className="font-body-lg text-lg text-white/90 max-w-2xl transition-all duration-500">
+                {displayDescription}
               </p>
             )}
           </div>

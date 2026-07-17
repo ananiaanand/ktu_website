@@ -13,6 +13,11 @@ const ResearchPage = lazy(() => import("@/pages/ResearchPage"));
 const IQACPage = lazy(() => import("@/pages/IQACPage"));
 const HRDCPage = lazy(() => import("@/pages/HRDCPage"));
 const SchoolsPortalPage = lazy(() => import("@/pages/SchoolsPortalPage"));
+const ResultsPage = lazy(() => import("@/pages/ResultsPage"));
+const AnnouncementsPage = lazy(() => import("@/pages/AnnouncementsPage"));
+const EventsPage = lazy(() => import("@/pages/EventsPage"));
+const LibraryPage = lazy(() => import("@/pages/LibraryPage"));
+const SportsArtsPage = lazy(() => import("@/pages/SportsArtsPage"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
 
 // Global loading fallback
@@ -52,6 +57,18 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<PageLoader />}><ExaminationPage /></Suspense>,
       },
       {
+        path: "results",
+        element: <Suspense fallback={<PageLoader />}><ResultsPage /></Suspense>,
+      },
+      {
+        path: "announcements",
+        element: <Suspense fallback={<PageLoader />}><AnnouncementsPage /></Suspense>,
+      },
+      {
+        path: "events",
+        element: <Suspense fallback={<PageLoader />}><EventsPage /></Suspense>,
+      },
+      {
         path: "research",
         element: <Suspense fallback={<PageLoader />}><ResearchPage /></Suspense>,
       },
@@ -62,6 +79,14 @@ const router = createBrowserRouter([
       {
         path: "hrdc",
         element: <Suspense fallback={<PageLoader />}><HRDCPage /></Suspense>,
+      },
+      {
+        path: "library",
+        element: <Suspense fallback={<PageLoader />}><LibraryPage /></Suspense>,
+      },
+      {
+        path: "sports",
+        element: <Suspense fallback={<PageLoader />}><SportsArtsPage /></Suspense>,
       },
       {
         path: "*",

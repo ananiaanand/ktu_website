@@ -25,7 +25,7 @@ export default function AffiliationPage() {
     <div>
       <HeroSection 
         title="Affiliation Portal"
-        description="Directory of affiliated colleges, norms, rules, and NBA accreditation details."
+        description="Directory of affiliated colleges, norms, rules, and NBA accreditation details. We maintain rigorous standards for our partner institutions to ensure that every student under the KTU umbrella receives a world-class education with state-of-the-art infrastructure."
         gradient="maroon"
       />
 
